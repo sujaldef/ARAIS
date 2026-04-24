@@ -1,0 +1,422 @@
+\documentclass[11pt, a4paper]{article}
+
+% ─── Packages ───────────────────────────────────────────────────────────────
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{titling}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{mdframed}
+\usepackage{hyperref}
+
+\usepackage{parskip}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable, skins}
+
+% ─── Colours ────────────────────────────────────────────────────────────────
+\definecolor{primary}{HTML}{1A1A2E}      % deep navy
+\definecolor{accent}{HTML}{E94560}       % vivid crimson-red
+\definecolor{accentsoft}{HTML}{F5A623}   % amber highlight
+\definecolor{subtle}{HTML}{4A4E69}       % muted slate
+\definecolor{lightbg}{HTML}{F4F6FB}      % near-white blue tint
+\definecolor{rulecol}{HTML}{E94560}
+
+% ─── Hyperref ───────────────────────────────────────────────────────────────
+\hypersetup{
+  colorlinks=true,
+  linkcolor=accent,
+  urlcolor=accent,
+  pdftitle={Adaptive Real-World Anomaly Intelligence System},
+  pdfauthor={AI/ML Systems Research}
+}
+
+% ─── Header / Footer ────────────────────────────────────────────────────────
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{accent}\leaders\hrule height \headrulewidth\hfill}}
+\fancyhead[L]{\small\color{subtle}\textbf{ARAIS} \textbar\ Project Overview}
+\fancyhead[R]{\small\color{subtle}AI/ML Systems Research}
+\fancyfoot[C]{\small\color{subtle}\thepage}
+
+% ─── Section Styling ────────────────────────────────────────────────────────
+\titleformat{\section}
+  {\large\bfseries\color{primary}}
+  {\color{accent}\thesection.}{0.6em}{}[{\color{accent}\titlerule[0.6pt]}]
+
+\titleformat{\subsection}
+  {\normalsize\bfseries\color{subtle}}
+  {\thesubsection.}{0.5em}{}
+
+\titlespacing{\section}{0pt}{18pt}{8pt}
+\titlespacing{\subsection}{0pt}{12pt}{4pt}
+
+% ─── Custom Boxes ───────────────────────────────────────────────────────────
+\newtcolorbox{gapbox}[2][]{
+  breakable,
+  colback=lightbg,
+  colframe=accent,
+  arc=3pt,
+  boxrule=1pt,
+  left=8pt, right=8pt, top=6pt, bottom=6pt,
+  title={\small\bfseries\color{white}#2},
+  fonttitle=\bfseries,
+  coltitle=white,
+  attach boxed title to top left={yshift=-2mm, xshift=4mm},
+  boxed title style={colback=accent, arc=2pt, boxrule=0pt},
+  #1
+}
+
+\newtcolorbox{visionbox}{
+  breakable,
+  colback=primary!4,
+  colframe=primary,
+  arc=3pt,
+  boxrule=0.8pt,
+  left=8pt, right=8pt, top=6pt, bottom=6pt,
+}
+
+\newtcolorbox{diffbox}{
+  breakable,
+  colback=accentsoft!10,
+  colframe=accentsoft,
+  arc=3pt,
+  boxrule=0.8pt,
+  left=8pt, right=8pt, top=6pt, bottom=6pt,
+}
+
+% ─── Utility commands ───────────────────────────────────────────────────────
+\newcommand{\mytag}[1]{%
+  \textcolor{white}{\colorbox{accent}{\footnotesize\bfseries\, #1\,}}%
+}
+\newcommand{\pillar}[1]{\textbf{\textcolor{primary}{#1}}}
+
+% ════════════════════════════════════════════════════════════════════════════
+\begin{document}
+% ════════════════════════════════════════════════════════════════════════════
+
+% ─── Title Block ────────────────────────────────────────────────────────────
+\begin{center}
+  {\fontsize{22}{26}\selectfont\bfseries\color{primary}
+    Adaptive Real-World Anomaly\\[4pt]Intelligence System}\\[10pt]
+  {\large\color{accent}\rule{6cm}{1.2pt}}\\[8pt]
+  {\normalsize\color{subtle}
+    \textit{Project Vision \textbar\ Research Overview \textbar\ System Architecture Philosophy}}\\[6pt]
+  {\small\color{subtle} AI/ML Systems Research \textbf{·} April 2026}
+\end{center}
+
+\vspace{6pt}
+\noindent\color{accent}\rule{\linewidth}{1.2pt}
+\vspace{8pt}
+
+% ─── Abstract strip ─────────────────────────────────────────────────────────
+\begin{visionbox}
+\noindent\textbf{\color{primary}Abstract.}\quad
+Anomaly detection in production is a fundamentally different problem than anomaly detection in a research lab.
+Real-world systems face noise, distributional shift, unseen failure modes, and hard latency budgets — 
+conditions that standard benchmarks never stress-test.
+\textbf{ARAIS} (\textit{Adaptive Real-World Anomaly Intelligence System}) addresses three under-solved 
+structural gaps: unrealistic evaluation, rigid model trade-offs, and open-world detection failures.
+It is designed not as a single model, but as an \textit{intelligent system} that evaluates, adapts, and detects
+within a unified, operationally-aware framework.
+\end{visionbox}
+
+\vspace{4pt}
+
+% ════════════════════════════════════════════════════════════════════════════
+\section{Key Gaps in Current Systems}
+% ════════════════════════════════════════════════════════════════════════════
+
+Modern anomaly detection research has reached impressive benchmark numbers — 
+yet production deployments routinely underperform, misfire, or silently degrade.
+The disconnect is not a model quality problem; it is a \textit{systems thinking} problem.
+Three structural gaps account for the majority of this production gap.
+
+\vspace{8pt}
+
+% ── Gap 1 ───────────────────────────────────────────────────────────────────
+\begin{gapbox}{\,Gap 1\; —\; Unrealistic Evaluation}
+\textbf{Why it exists.}\;
+Academic benchmarks optimise for reproducibility: static, pre-labelled, class-balanced datasets where 
+the test distribution matches the training distribution. This design choice is reasonable for controlled 
+science but catastrophically wrong as a proxy for production.
+
+\smallskip
+\textbf{Why it is critical.}\;
+Deployed systems face sensor drift, mislabelled telemetry, temporally-lagged anomaly annotations, 
+and rolling concept drift. A model that scores 0.97 AUC on a frozen dataset may produce 40\,\% 
+false-positive rates under mild real-world noise — a failure mode that is completely invisible 
+on the benchmark.
+
+\smallskip
+\textbf{How it limits production ML.}\;
+Teams ship models with inflated confidence, then burn engineering cycles on post-deployment 
+fire-fighting. Evaluation becomes a compliance ritual rather than a predictive signal of production 
+health. Without temporal and noise-aware evaluation harnesses, model selection and iteration 
+are fundamentally misguided.
+\end{gapbox}
+
+\vspace{8pt}
+
+% ── Gap 2 ───────────────────────────────────────────────────────────────────
+\begin{gapbox}{\,Gap 2\; —\; Model Trade-off Limitations}
+\textbf{Why it exists.}\;
+The dominant paradigm in anomaly detection is to train a single model — or an ensemble — 
+and deploy it as a static artefact. Model selection happens offline, optimised for a single 
+objective (usually recall or AUC), and then frozen for the lifecycle of the deployment.
+
+\smallskip
+\textbf{Why it is critical.}\;
+Production environments are not stationary. A microservice anomaly detector may face 10$\times$ 
+traffic spikes, a GPU-constrained edge device, a high-risk regulatory window requiring higher 
+precision, or a degraded upstream pipeline that changes input statistics.
+No single model is simultaneously optimal for high-load, low-latency, high-accuracy, 
+and low-compute scenarios.
+
+\smallskip
+\textbf{How it limits production ML.}\;
+Fixed models create brittle SLOs. Operators either over-provision compute 
+(to cover worst-case latency) or accept accuracy degradation under load. 
+The system has no mechanism to reason about its own performance-cost trade-off 
+or escalate decisions based on contextual risk — it simply fires the same detector 
+regardless of runtime state.
+\end{gapbox}
+
+\vspace{8pt}
+
+% ── Gap 6 ───────────────────────────────────────────────────────────────────
+\begin{gapbox}{\,Gap 6\; —\; Open-World Detection Failure}
+\textbf{Why it exists.}\;
+Supervised and semi-supervised anomaly detectors are trained on known anomaly classes or on 
+a closed normal distribution. The implicit assumption — that the test distribution is a subset 
+of the training distribution — is violated the moment a genuinely novel fault mode appears.
+
+\smallskip
+\textbf{Why it is critical.}\;
+Novel anomalies are precisely the events that matter most: zero-day system intrusions, 
+previously-unseen equipment failure signatures, emergent data pipeline corruptions.
+Systems that cannot handle out-of-distribution (OOD) inputs either silently misclassify them 
+as normal or force them into the nearest known class — both outcomes are operationally dangerous.
+
+\smallskip
+\textbf{How it limits production ML.}\;
+Overconfident closed-world detectors produce falsely high softmax probabilities for OOD inputs,
+masking the very events they should be flagging. The absence of uncertainty quantification means 
+there is no signal to trigger human review, escalation, or model update cycles. 
+The system does not know what it does not know.
+\end{gapbox}
+
+\vspace{2pt}
+
+% ════════════════════════════════════════════════════════════════════════════
+\section{Vision of the Solution}
+% ════════════════════════════════════════════════════════════════════════════
+
+ARAIS is designed around a single unifying principle:
+\textit{a production anomaly detection system must be as intelligent about its own operating conditions 
+as it is about the data it monitors.}
+
+The system vision spans four interconnected capabilities:
+
+\vspace{8pt}
+\noindent\pillar{2.1\quad Realistic, Dynamic Evaluation Infrastructure}
+\vspace{4pt}
+
+\begin{visionbox}
+Standard evaluation is replaced with a \textit{dynamic evaluation harness} that stress-tests models 
+under conditions that mirror real deployments: injected sensor noise, synthetic concept drift 
+at configurable rates, temporally delayed anomaly labels, class imbalance schedules, 
+and operational constraints such as throughput budgets and memory ceilings.
+
+The harness produces not a single performance number but a \textit{performance profile} — 
+a multi-dimensional characterisation of model behaviour across noise levels, drift intensities, 
+and latency regimes. This profile drives model selection and informs system-level decisions 
+throughout the deployment lifecycle.
+
+The goal is to make evaluation a \textit{continuous, live process} rather than a 
+pre-deployment gate: models are tracked, re-evaluated against incoming distribution statistics, 
+and flagged when their profile diverges from deployment conditions.
+\end{visionbox}
+
+\vspace{10pt}
+\noindent\pillar{2.2\quad Runtime-Adaptive Model Selection and Orchestration}
+\vspace{4pt}
+
+\begin{visionbox}
+A static model cannot reason about its own operational context.
+ARAIS introduces a \textit{model orchestration layer} that continuously monitors runtime signals —
+inference latency, system load, input distribution statistics, and risk tier of the 
+current decision window — and dynamically routes inference to the most appropriate detector.
+
+This is not simple model ensembling. It is contextual orchestration: a lightweight, fast detector 
+handles high-volume, low-risk windows; a higher-capacity model is invoked for anomalies flagged 
+as high-risk or during low-load periods where latency budgets are relaxed.
+The orchestrator continuously re-learns the cost-accuracy frontier of the available model pool, 
+adapting as new models are introduced or as system conditions change.
+
+The outcome is a system where accuracy, latency, and compute are treated as 
+\textit{jointly-optimised runtime objectives} rather than fixed offline trade-offs.
+\end{visionbox}
+
+\vspace{10pt}
+\noindent\pillar{2.3\quad Open-World Detection with Calibrated Uncertainty}
+\vspace{4pt}
+
+\begin{visionbox}
+ARAIS treats anomaly detection as an open-world inference problem from the ground up.
+Every inference path produces not just a detection decision but a \textit{structured uncertainty signal}:
+epistemic uncertainty over model parameters, aleatoric uncertainty over input ambiguity, 
+and a dedicated OOD proximity score that quantifies how far the current input lies from 
+the training distribution.
+
+Inputs that exceed OOD thresholds are not forced into known categories.
+They are routed to a \textit{novel-anomaly triage pipeline}: flagged for human review, 
+logged to an active-learning queue for future retraining, 
+and optionally handled by a conservative fallback that errs toward escalation over silence.
+
+This architecture means the system has a principled answer to the question:
+\textit{"Is this anomaly something I recognise, or something genuinely new?"} —
+a question that current closed-world systems cannot even pose.
+\end{visionbox}
+
+\vspace{10pt}
+\noindent\pillar{2.4\quad End-to-End Intelligent Integration}
+\vspace{4pt}
+
+\begin{visionbox}
+The three capabilities above are not independent modules — they are feedback-coupled subsystems 
+within a single operational loop. Evaluation outputs feed model selection;
+model selection decisions inform which evaluation dimensions to prioritise;
+OOD signals trigger re-evaluation and orchestration updates.
+
+This closed-loop architecture means the system actively maintains its own 
+operational health rather than passively serving requests.
+It is anomaly detection designed to function as a \textit{first-class production service}, 
+not a research model wrapped in an API endpoint.
+\end{visionbox}
+
+% ════════════════════════════════════════════════════════════════════════════
+\section{What Makes It Different}
+% ════════════════════════════════════════════════════════════════════════════
+
+The research and industry landscape contains many capable anomaly detectors.
+ARAIS is differentiated not by the sophistication of any individual model 
+but by a set of \textit{system-level design commitments} that are largely absent from existing work.
+
+\vspace{8pt}
+
+\begin{diffbox}
+\noindent\mytag{SHIFT 1}\quad\textbf{From Model-Centric to System-Level Intelligence}
+
+\smallskip
+Most anomaly detection research optimises a single model on a fixed task.
+ARAIS optimises an \textit{operational system} across a dynamic task space.
+The unit of intelligence is not the model; it is the system's ability to select, 
+compose, evaluate, and replace models in response to changing conditions.
+This mirrors how mature software systems handle reliability: through architecture and 
+redundancy, not by betting on a single perfect component.
+\end{diffbox}
+
+\vspace{8pt}
+
+\begin{diffbox}
+\noindent\mytag{SHIFT 2}\quad\textbf{Deployment Realism as a First-Class Design Constraint}
+
+\smallskip
+Every design decision in ARAIS is stress-tested against the question:
+\textit{"Does this work in a real deployment, not just in a notebook?"}
+Latency budgets, memory ceilings, data quality degradation, 
+and operational cost are not afterthoughts — they are embedded into the evaluation harness, 
+the orchestration logic, and the detection pipeline from day one.
+This is a deliberate departure from accuracy-first research culture 
+toward a \textit{deployment-first engineering culture}.
+\end{diffbox}
+
+\vspace{8pt}
+
+\begin{diffbox}
+\noindent\mytag{SHIFT 3}\quad\textbf{Self-Aware Architecture with Uncertainty as a Core Signal}
+
+\smallskip
+ARAIS is designed to know the boundaries of its own competence.
+Uncertainty quantification is not a metric reported at evaluation time; 
+it is a live signal that shapes inference routing, escalation decisions, 
+and human-in-the-loop triggers.
+A system that can communicate \textit{"I am not confident about this input"} 
+is qualitatively safer than one that silently outputs a high-confidence wrong answer.
+This self-awareness is the foundational property that makes ARAIS trustworthy in high-stakes domains —
+not just accurate under benign conditions.
+\end{diffbox}
+
+\vspace{8pt}
+
+\begin{diffbox}
+\noindent\mytag{SHIFT 4}\quad\textbf{Unified Integration of Evaluation, Adaptation, and Detection}
+
+\smallskip
+Existing systems treat evaluation, model selection, and detection as three separate concerns, 
+often owned by three separate teams. ARAIS unifies them into a single operational loop 
+where each component continuously informs the others.
+
+\smallskip
+\noindent The resulting architecture is summarised below:
+
+\vspace{6pt}
+\begin{center}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabularx}{0.94\linewidth}{>{\bfseries\color{primary}}l X}
+\toprule
+\color{primary}Component & \color{primary}Function \\
+\midrule
+Evaluation Harness & Continuous, noise-aware, drift-injecting model profiling \\
+Orchestration Layer & Runtime-adaptive routing across cost-accuracy frontier \\
+OOD \& Uncertainty Engine & Principled handling of novel and ambiguous inputs \\
+Feedback Loop & Closed-loop coupling across all three components \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\vspace{4pt}
+No existing open-source or commercial system integrates all four components 
+into a coherent operational architecture.
+ARAIS fills that gap.
+\end{diffbox}
+
+% ════════════════════════════════════════════════════════════════════════════
+\section*{Closing Statement}
+% ════════════════════════════════════════════════════════════════════════════
+\addcontentsline{toc}{section}{Closing Statement}
+\vspace{-4pt}
+\noindent\color{accent}\rule{\linewidth}{0.6pt}
+\vspace{6pt}
+
+\begin{visionbox}
+The next frontier in anomaly detection is not a better model architecture.
+It is \textit{better systems thinking} — the ability to evaluate honestly, 
+adapt intelligently, and detect openly in the full complexity of real-world deployments.
+
+ARAIS represents a research commitment to building anomaly detection 
+that is not merely performant under idealised conditions, but \textbf{trustworthy under operational ones}.
+
+It is anomaly intelligence designed for the world as it is, not as benchmarks imagine it to be.
+\end{visionbox}
+
+\vspace{10pt}
+\noindent\color{accent}\rule{\linewidth}{1.2pt}
+\begin{center}
+  \small\color{subtle}
+  \textit{Adaptive Real-World Anomaly Intelligence System — Research Vision Document}\\
+  \textit{For distribution to senior engineers, ML practitioners, and technical leadership.}
+\end{center}
+
+\end{document}
