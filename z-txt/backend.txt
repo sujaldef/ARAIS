@@ -1,0 +1,371 @@
+# 🚀 Intelligent Code Analysis System — Backend Flow Architecture
+
+---
+
+# 🧠 1. Overview
+
+This document explains the **end-to-end backend pipeline** of an intelligent code analysis system.
+
+The goal:
+
+> Transform raw code input into reliable, explainable, and adaptive error detection.
+
+Unlike basic systems, this architecture focuses on:
+
+* Context awareness
+* Model selection
+* Uncertainty handling
+* Continuous improvement
+
+---
+
+# 🔄 2. Complete System Flow
+
+```id="flow001"
+User Input (Code File)
+        ↓
+Ingestion Layer
+        ↓
+Parsing Layer
+        ↓
+Preprocessing Layer
+        ↓
+OOD Detection (Known vs Unknown)
+        ↓
+Orchestrator (Decision Engine)
+        ↓
+Model Inference Layer
+        ↓
+Uncertainty + Validation Layer
+        ↓
+Evaluation Layer
+        ↓
+Feedback Loop
+        ↓
+Storage Layer
+        ↓
+Output to User
+```
+
+---
+
+# 🧩 3. Layer-by-Layer Architecture
+
+---
+
+# ⚙️ 3.1 Ingestion Layer (Entry Point)
+
+## Purpose
+
+Handles incoming user data.
+
+## Responsibilities
+
+* Accept file uploads (`.js`, `.ts`, `.json`, etc.)
+* Validate format and size
+* Temporary storage
+
+## Why It Matters
+
+A failure here corrupts the entire pipeline.
+
+---
+
+# ⚙️ 3.2 Data Parsing Layer
+
+## Purpose
+
+Transforms raw code into structured format.
+
+## Responsibilities
+
+* Tokenization
+* Syntax extraction
+* Structural breakdown
+
+## Example
+
+```id="parse001"
+if(x == 5) console.log("hi")
+```
+
+Becomes:
+
+* Tokens: `if`, `(`, `x`, `==`, `5`, `)`
+* Structural representation
+
+## Why It Matters
+
+Models cannot process raw text effectively without structure.
+
+---
+
+# ⚙️ 3.3 Preprocessing Layer
+
+## Purpose
+
+Converts parsed data into model-ready features.
+
+## Responsibilities
+
+* Normalization
+* Feature engineering
+* Embedding generation
+* Chunking large inputs
+
+## Possible Techniques
+
+* AST (Abstract Syntax Tree)
+* Token embeddings
+* Code embeddings (e.g., transformer-based)
+
+## Why It Matters
+
+Poor preprocessing directly leads to poor predictions.
+
+---
+
+# ⚙️ 3.4 OOD Detection Layer (Out-of-Distribution Check)
+
+## Purpose
+
+Determines whether input is familiar to the system.
+
+## Decision
+
+* Known pattern → continue
+* Unknown pattern → flag
+
+## Example
+
+| Input Type         | Result    |
+| ------------------ | --------- |
+| Standard MERN code | Known ✅   |
+| Obfuscated code    | Unknown ❌ |
+
+## Why It Matters
+
+Prevents confident but incorrect predictions on unseen inputs.
+
+---
+
+# ⚙️ 3.5 Orchestrator Layer (System Brain)
+
+## Purpose
+
+Selects the most appropriate model dynamically.
+
+## Decision Factors
+
+* File size
+* Code complexity
+* System resource usage
+* Risk level
+
+## Example Mapping
+
+| Scenario         | Selected Model |
+| ---------------- | -------------- |
+| Small file       | Fast model     |
+| Complex logic    | Deep model     |
+| High system load | Lightweight    |
+
+## Why It Matters
+
+Enables intelligent, efficient, and adaptive execution.
+
+---
+
+# ⚙️ 3.6 Model Inference Layer
+
+## Purpose
+
+Performs core ML prediction.
+
+## Input
+
+* Preprocessed feature vectors
+
+## Output
+
+* Error classification
+* Anomaly score
+* Confidence score
+* Uncertainty level
+
+## Example Output
+
+```id="infer001"
+Error: TRUE
+Confidence: 0.87
+Uncertainty: LOW
+```
+
+## Why It Matters
+
+This is the core prediction step—but not the entire system.
+
+---
+
+# ⚙️ 3.7 Uncertainty & Validation Layer
+
+## Purpose
+
+Evaluates reliability of model output.
+
+## Example
+
+```id="unc001"
+Error: TRUE
+Confidence: 0.55
+Uncertainty: HIGH ⚠️
+```
+
+## Action
+
+* Flag output as risky
+* Recommend review
+
+## Why It Matters
+
+Prevents blind trust in incorrect predictions.
+
+---
+
+# ⚙️ 3.8 Evaluation Layer (System Self-Monitoring)
+
+## Purpose
+
+Tracks system performance over time.
+
+## Metrics
+
+* Accuracy
+* False positives / negatives
+* Latency
+* Model-specific performance
+
+## Example Insights
+
+* Model A struggles with large files
+* Model B is accurate but slow
+
+## Why It Matters
+
+Enables data-driven system improvement.
+
+---
+
+# ⚙️ 3.9 Feedback Loop (Learning Mechanism)
+
+## Purpose
+
+Continuously improves system using user input.
+
+## Example
+
+User feedback:
+
+> "This is NOT an error"
+
+## System Response
+
+* Stores correction
+* Updates dataset
+* Improves future predictions
+
+## Why It Matters
+
+System evolves without full retraining cycles.
+
+---
+
+# ⚙️ 3.10 Storage Layer
+
+## Stores
+
+* Uploaded files
+* Predictions
+* Logs
+* Metrics
+* Feedback data
+
+## Why It Matters
+
+Essential for:
+
+* Learning
+* Debugging
+* Performance tracking
+
+---
+
+# ⚙️ 3.11 Output Layer (User Interface)
+
+## Final Output Includes
+
+* Error / No Error
+* Confidence score
+* Uncertainty level
+* Risk indicators
+* Unknown pattern alerts
+
+## Example
+
+```id="out001"
+Error: TRUE
+Confidence: 0.92
+Uncertainty: LOW
+Status: Reliable
+```
+
+---
+
+# 🔥 4. Key Insight
+
+Only **one layer (Model Inference)** performs machine learning.
+
+All other layers provide:
+
+* Intelligence
+* Reliability
+* Adaptability
+* System control
+
+---
+
+# 🧠 5. Conceptual Summary
+
+## Traditional Thinking
+
+> Input → Model → Output
+
+## Intelligent System Thinking
+
+> Input → Understand → Validate → Decide → Analyze → Verify → Learn → Improve → Output
+
+---
+
+# 🏁 6. Final Takeaway
+
+This architecture shifts the focus from:
+
+* Building a single powerful model
+
+to:
+
+* Designing a system that intelligently uses models
+
+---
+
+# 🚀 Conclusion
+
+A robust code analysis system is not defined by:
+
+> how good the model is
+
+but by:
+
+> how well the system manages uncertainty, adapts to inputs, and improves over time.
+
+---
