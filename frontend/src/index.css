@@ -1,111 +1,506 @@
+@import '@fontsource/dm-mono/400.css';
+@import '@fontsource/ibm-plex-sans/400.css';
+@import '@fontsource/ibm-plex-sans/500.css';
+@import '@fontsource/ibm-plex-sans/600.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  /* Colors */
+  --color-bg-base: #0d1117;
+  --color-bg-panel: #111827;
+  --color-bg-panel-alt: #0f172a;
+  --color-bg-elevated: #1e293b;
+  --color-bg-input: #1a2235;
+  --color-bg-hover: #1f2d40;
+  --color-bg-selected: #1e3a5f;
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+  --color-border: #1e2d3d;
+  --color-border-strong: #2d3f55;
+  --color-border-glow-blue: #2563eb40;
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --color-text-primary: #f1f5f9;
+  --color-text-secondary: #94a3b8;
+  --color-text-muted: #4b5563;
+  --color-text-inverse: #0d1117;
+  --color-text-code: #7dd3fc;
 
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
+  /* Semantic Colors */
+  --color-anomaly: #dc2626;
+  --color-anomaly-soft: #7f1d1d;
+  --color-anomaly-glow: #dc262640;
+  --color-anomaly-text: #fca5a5;
+
+  --color-normal: #0d9488;
+  --color-normal-soft: #0f3430;
+  --color-normal-glow: #0d948840;
+  --color-normal-text: #5eead4;
+
+  --color-uncertain: #d97706;
+  --color-uncertain-soft: #451a03;
+  --color-uncertain-glow: #d9770640;
+  --color-uncertain-text: #fcd34d;
+
+  --color-ood: #7c3aed;
+  --color-ood-soft: #2e1065;
+  --color-ood-glow: #7c3aed40;
+  --color-ood-text: #c4b5fd;
+
+  --color-active: #2563eb;
+  --color-active-soft: #1e3a8a;
+  --color-active-glow: #2563eb50;
+  --color-active-text: #93c5fd;
+
+  --color-info: #3b82f6;
+  --color-info-text: #bfdbfe;
+
+  /* Typography */
+  --font-display: 'DM Mono', 'JetBrains Mono', monospace;
+  --font-body: 'IBM Plex Sans', 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Spacing (base-4 scale) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  /* this index.css plays quite a important role in defining the overall look and feel of the application. It sets up a comprehensive design system using CSS variables for colors, typography, spacing, shadows, and transitions. This allows for consistent styling across the entire app and makes it easy to maintain and update the design in the future. The use of CSS variables also enables theming capabilities, allowing for easy adjustments to the color scheme or typography by simply changing the variable values. Additionally, it includes base styles for common elements like buttons and inputs, as well as animations and a custom scrollbar design, enhancing the user experience and visual appeal of the application; */
+  /* Shadows */
+  --shadow-panel: 0 2px 8px rgba(0, 0, 0, 0.4), 0 0 0 1px #1e2d3d;
+  --shadow-elevated: 0 8px 24px rgba(0, 0, 0, 0.6), 0 0 0 1px #2d3f55;
+
+  /* Transitions */
+  --transition-fast: 120ms;
+  --transition-base: 220ms;
+  --transition-slow: 400ms;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
+/* CSS Scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
 }
 
+::-webkit-scrollbar-track {
+  background: var(--color-bg-base);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-strong);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
+
+html,
 body {
+  height: 100%;
+  width: 100%;
   margin: 0;
+  padding: 0;
+  background: var(--color-bg-base);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  font-size: 14px;
 }
 
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
+* {
   box-sizing: border-box;
 }
 
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
+#root {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
+a {
+  color: var(--color-active);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--color-active-text);
+}
+
+/* Base button and input resets */
+button,
+input,
+select,
+textarea {
+  font-family: var(--font-body);
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+  color: inherit;
+}
+
+input,
+textarea,
+select {
+  background: var(--color-bg-input);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
+  padding: var(--space-2);
+  border-radius: 3px;
+  font-family: inherit;
+  font-size: inherit;
+  transition: all var(--transition-fast);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--color-active);
+  box-shadow: 0 0 0 2px var(--color-active-glow);
+}
+
+/* Animations */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
-p {
+
+@keyframes pulse-badge {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(1.3);
+  }
+}
+
+@keyframes pulse-alert {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 var(--color-anomaly-glow);
+  }
+  50% {
+    box-shadow: 0 0 0 6px transparent;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -400px 0;
+  }
+  100% {
+    background-position: 400px 0;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes countUp {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+:root {
+  /* Colors */
+  --color-bg-base: #0d1117;
+  --color-bg-panel: #111827;
+  --color-bg-panel-alt: #0f172a;
+  --color-bg-elevated: #1e293b;
+  --color-bg-input: #1a2235;
+  --color-bg-hover: #1f2d40;
+  --color-bg-selected: #1e3a5f;
+
+  --color-border: #1e2d3d;
+  --color-border-strong: #2d3f55;
+  --color-border-glow-blue: #2563eb40;
+
+  --color-text-primary: #f1f5f9;
+  --color-text-secondary: #94a3b8;
+  --color-text-muted: #4b5563;
+  --color-text-inverse: #0d1117;
+  --color-text-code: #7dd3fc;
+
+  /* Semantic Colors */
+  --color-anomaly: #dc2626;
+  --color-anomaly-soft: #7f1d1d;
+  --color-anomaly-glow: #dc262640;
+  --color-anomaly-text: #fca5a5;
+
+  --color-normal: #0d9488;
+  --color-normal-soft: #0f3430;
+  --color-normal-glow: #0d948840;
+  --color-normal-text: #5eead4;
+
+  --color-uncertain: #d97706;
+  --color-uncertain-soft: #451a03;
+  --color-uncertain-glow: #d9770640;
+  --color-uncertain-text: #fcd34d;
+
+  --color-ood: #7c3aed;
+  --color-ood-soft: #2e1065;
+  --color-ood-glow: #7c3aed40;
+  --color-ood-text: #c4b5fd;
+
+  --color-active: #2563eb;
+  --color-active-soft: #1e3a8a;
+  --color-active-glow: #2563eb50;
+  --color-active-text: #93c5fd;
+
+  --color-info: #3b82f6;
+  --color-info-text: #bfdbfe;
+
+  /* Typography */
+  --font-display: 'DM Mono', 'JetBrains Mono', monospace;
+  --font-body: 'IBM Plex Sans', 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Spacing (base-4 scale) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+
+  /* Shadows */
+  --shadow-panel: 0 2px 8px rgba(0, 0, 0, 0.4), 0 0 0 1px #1e2d3d;
+  --shadow-elevated: 0 8px 24px rgba(0, 0, 0, 0.6), 0 0 0 1px #2d3f55;
+
+  /* Transitions */
+  --transition-fast: 120ms;
+  --transition-base: 220ms;
+  --transition-slow: 400ms;
+}
+
+/* CSS Scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-base);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-strong);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
   margin: 0;
+  padding: 0;
+  background: var(--color-bg-base);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  font-size: 14px;
 }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
+* {
+  box-sizing: border-box;
 }
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+#root {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  color: var(--color-active);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--color-active-text);
+}
+
+/* Base button and input resets */
+button,
+input,
+select,
+textarea {
+  font-family: var(--font-body);
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+  color: inherit;
+}
+
+input,
+textarea,
+select {
+  background: var(--color-bg-input);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
+  padding: var(--space-2);
+  border-radius: 3px;
+  font-family: inherit;
+  font-size: inherit;
+  transition: all var(--transition-fast);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--color-active);
+  box-shadow: 0 0 0 2px var(--color-active-glow);
+}
+
+/* Animations */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pulse-badge {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(1.3);
+  }
+}
+
+@keyframes pulse-alert {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 var(--color-anomaly-glow);
+  }
+  50% {
+    box-shadow: 0 0 0 6px transparent;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -400px 0;
+  }
+  100% {
+    background-position: 400px 0;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes countUp {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }
