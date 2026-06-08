@@ -19,7 +19,40 @@ const DataIngestionPage = () => {
       </div>
 
       <div className="flex gap-2 border-b border-border mb-4">
+        {['file', 'stream', 'api'].map((tab) => (
+          <button
+            key={tab}
+            onClick={() => setActiveTab(tab)}
+            className={`px-4 py-2 text-sm font-medium transition-colors border-b-2 capitalize ${
+              activeTab === tab
+                ? 'border-active text-active'
+                : 'border-transparent text-text-muted'
+            }`}
+          >
+            {tab} Upload
+          </button>
+        ))}
+      </div>
 
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <Panel title="Configuration" className="lg:col-span-2">
+          {activeTab === 'file' && (
+            <div className="space-y-4">
+              <div className="border-2 border-dashed border-border rounded-lg p-12 text-center hover:border-active transition-colors cursor-pointer">
+                <p className="text-text-secondary">
+                  Drag and drop files here, or click to browse
+                </p>
+                <p className="text-xs text-text-muted mt-2">
+                  Supports CSV, JSON, Parquet (Max 500MB)
+                </p>
+              </div>
+              <div className="flex justify-end gap-2">
+                <Button variant="ghost">Clear</Button>
+                <Button>Process Data</Button>
+              </div>
+            </div>
+          )}
+          {activeTab === 'stream' && (
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
